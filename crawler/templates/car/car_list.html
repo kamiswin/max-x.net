@@ -1,0 +1,42 @@
+{% extends "car_base.html" %}
+{% block content %}
+{% if car_list %}
+<ul class="thumbnails main-list">
+    {% for i in car_list %}
+
+    <li>
+        <div class="thumbnail">
+            <a href="{% url 'spider:detail' i.id %}">
+                <img src="{{ i.car_icon }}" /></a>
+            <div class="caption">
+                <h3><a href="{% url 'spider:detail' i.id %}" class="text-warning">{{ i.car_title }}</a> </h3>
+            </div>
+            <p>{{ i.car_des }}</p>
+        </div>
+    </li>
+
+
+    {% endfor %}
+</ul>
+<li>
+    <div class="pagination pagination-centered">
+        <span class="step-links">
+            {% if car_list.has_previous %}
+                <a href="?page={{ car_list.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ car_list.number }} of {{ car_list.paginator.num_pages }}.
+            </span>
+
+            {% if car_list.has_next %}
+                <a href="?page={{ car_list.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+</li>
+{% else %}
+<p>no cars are available.</p>
+{% endif %}
+
+{% endblock %}

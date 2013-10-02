@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+<div class="article">
+    {% block content %}
+    <h1>{{ car.car_title }}</h1>
+    <ul>
+        {{ car.car_des }}
+    </ul>
+    <ul>
+        {{ car.car_time }}
+    </ul>
+    <ul>
+        {{ car.car_body|safe }}
+    </ul>
+    <div align="center">
+        <a href="{{ car.car_link }}">源地址
+            {{ car.car_link }}
+        </a>
+    </div>
+    <ul>
+        from {{ car.car_source }}
+    </ul>
+    {% endblock %}
+</div>
