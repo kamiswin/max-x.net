@@ -1,5 +1,9 @@
 # Django settings for crawler project.
-
+import os
+import sys
+selfpath = os.path.split(os.path.realpath(__file__))[0]
+PATH = os.path.abspath(os.path.join(selfpath,'..'))
+#sys.path.append(PATH)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -31,7 +35,7 @@ ALLOWED_HOSTS = []
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'America/Chicago'
 
-# Language code for this installation. All choices can be found here:
+# Language code for this installation. All choices can be fosudound here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
@@ -72,7 +76,8 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/seraph/PycharmProjects/django-test/crawler/static',
+    #'/home/max/PycharmProjects/max-x.net/crawler/static',
+    PATH + '/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -112,8 +117,10 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/seraph/PycharmProjects/django-test/crawler/templates',
-    '/home/seraph/PycharmProjects/django-test/crawler/templates/car',
+    #'/home/max/PycharmProjects/max-x.net/crawler/templates',
+    #'/home/max/PycharmProjects/max-x.net/crawler/templates/car',
+    PATH + '/templates/car',
+    PATH + '/templates',
 )
 
 INSTALLED_APPS = (
