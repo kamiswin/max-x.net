@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.template import Context,loader
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from spider.models import Car
-from django.db.models import Q
+#from django.db.models import Q
 
 
 def index(request):
@@ -33,11 +33,19 @@ def detail(request, car_id):
 
 
 def listing(request,car_cate=None):
-    query = None;
+    query = None
+    site = None
+    if 'site' in request.GET:
+        site = request.GET['site']
     if 'query' in request.GET:
        query = request.GET['query']
-    if query:
-        car_list = Car.objects.filter(Q(car_title__contains=query)|Q(car_body__contains=query)).order_by('-car_time')
+    if site:
+        if car_cate:
+            car_list = Car.objects.filter(car_source=site,car_cate=car_cate).order_by('-car_time')
+        else:
+            car_list = Car.objects.filter(car_source=site).order_by('-car_time')
+    elif query:
+        car_list = Car.objects.filter(car_title__contains=query).order_by('-car_time')
     elif car_cate:
         car_list = Car.objects.filter(car_cate=car_cate).order_by('-car_time')
     else:

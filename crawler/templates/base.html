@@ -79,6 +79,8 @@
                     {% block content %}
                     {% endblock %}
                     <!--</ul>-->
+
+
                 </div>
                 {% block query %}
                 {% endblock %}
@@ -89,22 +91,36 @@
                 <div class="aside">
                     <div class="row-fluid">
                         <ul class="thumbnails ad-list">
-                            <li>
-                                <div class="box"><a href="Article.html">
-                                    <img src="/static/img/a10.jpg" /></a></div>
-                            </li>
-                            <li>
-                                <div class="box"><a href="Article.html">
-                                    <img src="/static/img/a7.jpg" /></a></div>
-                            </li>
-                            <li>
-                                <div class="box"><a href="Article.html">
-                                    <img src="/static/img/a8.jpg" /></a></div>
-                            </li>
-                            <li>
-                                <div class="box"><a href="Article.html">
-                                    <img src="/static/img/a6.jpg" /></a></div>
-                            </li>
+                            <form action="" method="get" id="mysite" name="site">
+                                <table>
+                                    <tr>
+                                        <li>
+                                            <div>
+                                                <button type="submit" id="chinaluxus">
+                                                    中奢网
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button type="submit" id="527motor">
+                                                    527摩托
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </tr>
+                                    <li>
+                                        <div>
+                                            <button type="submit" id="autohome">
+                                                汽车之家
+                                            </button>
+                                        </div>
+                                    </li>
+
+                                </table>
+
+                                <input type="hidden" id="siteswitch" name="site" >
+                            </form>
                         </ul>
                     </div>
                     <div class="row-fluid">
@@ -129,15 +145,6 @@
                         {% block recent %}
                         <ul class="unstyled">
                             {% for i in car_rencent %}
-                            <!--<li><a href="Article.html">从Android的设计规则看Google的用户体验观</a></li>-->
-                            <!--<li><a href="Article.html">网易新闻跟帖为什么火爆 自娱自乐？</a></li>-->
-                            <!--<li><a href="Article.html">音美国电商为什么不自建物流：准比快更重要</a></li>-->
-                            <!--<li><a href="Article.html">马云的几个小故事：马化腾后悔未投资淘宝</a></li>-->
-                            <!--<li><a href="Article.html">狙击京东：天猫为什么发动二选一平台大战</a></li>-->
-                            <!--<li><a href="Article.html">音乐网站遭版权方催逼 5日或全面试行收费</a></li>-->
-                            <!--<li><a href="Article.html">PPTV收购案再现新主角：苏宁发收购意向书</a></li>-->
-                            <!--<li><a href="Article.html">轮椅上的风景：残疾程序员张肖敏北上寻梦记</a></li>-->
-                            <!--<li><a href="Article.html">音乐网站遭版权方催逼 5日或全面试行收费</a></li>-->
                             <li><a href="{% url 'spider:detail' i.id %}">{{ i.car_title }}</a></li>
                             {% endfor %}
                         </ul>
@@ -158,6 +165,18 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#chinaluxus').click(function(){
+                $('#siteswitch').val('chinaluxus');
+        });
+        $('#527motor').click(function(){
+                $('#siteswitch').val('527motor');
+        });
+        $('#autohome').click(function(){
+                $('#siteswitch').val('autohome');
+        });
+    });
+</script>
 </body>
 </html>
