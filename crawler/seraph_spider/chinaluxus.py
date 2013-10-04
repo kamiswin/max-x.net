@@ -23,9 +23,25 @@ sys.setdefaultencoding('utf-8')
 
 
 catechoice = {
-    ('Car','Lif','Cul','Gal'):'car',
-    ('Yac',):'boat',
-    ('Air',):'plane',
+    ('http://drive.chinaluxus.com/Car',
+     'http://drive.chinaluxus.com/Lif',
+     'http://drive.chinaluxus.com/Cul',
+     'http://drive.chinaluxus.com/Gal'
+        ):'car',
+    ('http://drive.chinaluxus.com/Yac',
+        ):'boat',
+    ('http://drive.chinaluxus.com/Air',
+        ):'plane',
+    ('http://re.chinaluxus.com/Eli/',
+     'http://re.chinaluxus.com/Tre/',
+     'http://re.chinaluxus.com/Hom/',
+     'http://re.chinaluxus.com/Dsg/',
+     'http://re.chinaluxus.com/Cel/',
+        ):'house',
+    ('http://taste.chinaluxus.com/Sca/',
+     'http://taste.chinaluxus.com/Drk/',
+     'http://taste.chinaluxus.com/Fod/',
+        ):'food',
 }
 
 def category_select(item,dic):
@@ -35,13 +51,12 @@ def category_select(item,dic):
 
 
 
-chinaluxus_url = 'http://drive.chinaluxus.com/'
 
 cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'],kill_tags=['a'])
 def spiderboy(cate):
 
 
-    page = requests.get(chinaluxus_url+cate)
+    page = requests.get(cate)
     html = lxml.html.fromstring(page.content)
     for item in html.cssselect('.listDetail')[1:]:
         car_link=item.cssselect('.fb14d a')[0].get('href')
@@ -86,7 +101,7 @@ def spiderboy(cate):
                      car_link=car_link,
                      car_body=car_body,
                      car_icon=car_icon,
-                     car_source="中奢网",
+                     car_source="chinaluxus",
                      car_cate=car_cate)
 
 
@@ -138,12 +153,20 @@ def nextPhoto(html):
 if __name__ == '__main__':
     gevent.joinall(
         [
-            gevent.spawn(spiderboy,('Car')),
-            gevent.spawn(spiderboy,('Lif')),
-            gevent.spawn(spiderboy,('Cul')),
-            gevent.spawn(spiderboy,('Gal')),
-            gevent.spawn(spiderboy,('Yac')),
-            gevent.spawn(spiderboy,('Air')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Car')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Lif')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Cul')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Gal')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Yac')),
+            gevent.spawn(spiderboy,('http://drive.chinaluxus.com/Air')),
+            gevent.spawn(spiderboy,('http://re.chinaluxus.com/Eli/')),
+            gevent.spawn(spiderboy,('http://re.chinaluxus.com/Tre/')),
+            gevent.spawn(spiderboy,('http://re.chinaluxus.com/Hom/')),
+            gevent.spawn(spiderboy,('http://re.chinaluxus.com/Dsg/')),
+            gevent.spawn(spiderboy,('http://re.chinaluxus.com/Cel/')),
+            gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Fod/')),
+            gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Drk/')),
+            gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Sca/')),
         ]
     )
 
