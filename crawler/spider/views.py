@@ -5,8 +5,10 @@ from django.http import HttpResponse
 from django.template import Context,loader
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from spider.models import Car
+import logging
 #from django.db.models import Q
 
+logger = logging.getLogger(__name__)
 
 def index(request):
     car_list = Car.objects.all()

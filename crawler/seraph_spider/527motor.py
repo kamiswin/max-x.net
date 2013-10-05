@@ -16,12 +16,15 @@ import requests
 import lxml.html
 from lxml.html.clean import Cleaner
 import re
+import logging
+import logging.config
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'],kill_tags=['a'])
 
-
+logging.config.fileConfig('crawler/seraph_spider/logging.conf')
+logger = logging.getLogger('527motor')
 
 
 base_url = 'http://www.527motor.com/'
@@ -35,8 +38,10 @@ def spiderboy(cate):
 
     for item in items:
         car_link = base_url + item.cssselect('.xs2 a')[0].get('href')
+        logger.info('link: ' + car_link)
         try:
             Car.objects.get(car_link=car_link)
+            logger.info('already have ' + car_link)
             pass
         except Exception,e:
             car_title = str(item.cssselect('.xs2 a')[0].text_content())
@@ -68,6 +73,7 @@ def spiderboy(cate):
                      car_cate='motorbike')
 
             ca.save()
+            logger.info('done one')
 
 
 if __name__ == '__main__':
