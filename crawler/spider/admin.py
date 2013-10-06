@@ -1,6 +1,7 @@
 __author__ = 'seraph'
 from django.contrib import admin
 from spider.models import Car
+from spider.models import User
 
 #admin.site.register(Car)
 
@@ -24,6 +25,11 @@ class CarAdmin(admin.ModelAdmin):
     date_hierarchy = 'car_time'
 
     list_per_page = 15
-    
+
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username','password','signtime')
 
 admin.site.register(Car,CarAdmin)
+admin.site.register(User,UserAdmin)

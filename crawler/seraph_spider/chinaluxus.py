@@ -62,7 +62,7 @@ def spiderboy(cate):
 
     page = requests.get(cate)
     html = lxml.html.fromstring(page.content)
-    for item in html.cssselect('.listDetail')[1:]:
+    for item in html.cssselect('.listDetail'):
         car_link=item.cssselect('.fb14d a')[0].get('href')
         logger.info('link: ' + car_link)
         try:

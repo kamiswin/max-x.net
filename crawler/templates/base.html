@@ -27,15 +27,11 @@
 <div id="container">
     <div class="header navbar-fixed-top">
         <div class="container">
-            <div class="row-fluid">
-
-            </div>
             <div class="menu">
                 <div class="row-fluid">
-                    <div class="span7">
+                    <div class="span6">
                         <ul class="nav nav-pills">
                             <li><a href="{% url 'spider:index' %}">多可笑</a></li>
-                            <li><a href="{% url 'spider:index' %}">全部</a></li>
                             <!--<li><a href="{% url 'spider:index' %}?cate=car">汽车</a></li>-->
                             <li><a href="{% url 'spider:index' %}car">汽车</a></li>
                             <li><a href="{% url 'spider:index' %}boat">游艇</a></li>
@@ -45,14 +41,27 @@
                             <li><a href="{% url 'spider:index' %}food">美食</a></li>
                         </ul>
                     </div>
-                    <div class="span5">
+                    <div class="span4">
                         <form action="{% url 'spider:index' %}" method="get" class="form-search pull-right">
                             <input type="text" class="input-medium search-query" name="query">
                             <button type="submit" class="btn btn-small">搜索</button>
                         </form>
                     </div>
+                    <div class="span2">
+                        <ul class="nav nav-pills">
+                            <span>{{ username }}</span>
+                            {% if username != '' %}
+                            <a href="/logout/">logout</a>
+                            {% else %}
+                            <a href="/login/">login</a>
+                            <a href="/regist/">regist</a>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
+
             </div>
+
         </div>
     </div>
 </div>
@@ -168,13 +177,13 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#chinaluxus').click(function(){
-                $('#siteswitch').val('chinaluxus');
+            $('#siteswitch').val('chinaluxus');
         });
         $('#527motor').click(function(){
-                $('#siteswitch').val('527motor');
+            $('#siteswitch').val('527motor');
         });
         $('#autohome').click(function(){
-                $('#siteswitch').val('autohome');
+            $('#siteswitch').val('autohome');
         });
     });
 </script>
