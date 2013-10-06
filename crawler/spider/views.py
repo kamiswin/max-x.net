@@ -119,4 +119,5 @@ def logout(request):
         del request.session['username']
         return render_to_response('logout.html',{'username':session},context_instance=RequestContext(request))
     else:
-        return HttpResponse('please login!')
+        #return HttpResponse('please login!')
+        return HttpResponseRedirect('/')

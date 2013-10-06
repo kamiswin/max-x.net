@@ -118,14 +118,22 @@
                                             </div>
                                         </li>
                                     </tr>
-                                    <li>
-                                        <div>
-                                            <button type="submit" id="autohome">
-                                                汽车之家
-                                            </button>
-                                        </div>
-                                    </li>
-
+                                    <tr>
+                                        <li>
+                                            <div>
+                                                <button type="submit" id="autohome">
+                                                    汽车之家
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button type="submit" id="neeu">
+                                                    优网
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </tr>
                                 </table>
 
                                 <input type="hidden" id="siteswitch" name="site" >
@@ -184,6 +192,9 @@
         });
         $('#autohome').click(function(){
             $('#siteswitch').val('autohome');
+        });
+        $('#neeu').click(function(){
+            $('#siteswitch').val('neeu');
         });
     });
 </script>

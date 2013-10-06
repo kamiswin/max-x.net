@@ -31,22 +31,22 @@ catechoice = {
      'http://drive.chinaluxus.com/Lif',
      'http://drive.chinaluxus.com/Cul',
      'http://drive.chinaluxus.com/Gal'
-        ):'car',
+    ):'car',
     ('http://drive.chinaluxus.com/Yac',
-        ):'boat',
+    ):'boat',
     ('http://drive.chinaluxus.com/Air',
-        ):'plane',
+    ):'plane',
     ('http://re.chinaluxus.com/Eli/',
      'http://re.chinaluxus.com/Tre/',
      'http://re.chinaluxus.com/Hom/',
      'http://re.chinaluxus.com/Dsg/',
      'http://re.chinaluxus.com/Cel/',
-        ):'house',
+    ):'house',
     ('http://taste.chinaluxus.com/Sca/',
      'http://taste.chinaluxus.com/Drk/',
      'http://taste.chinaluxus.com/Fod/',
-        ):'food',
-}
+    ):'food',
+    }
 
 def category_select(item,dic):
     for i in dic.iterkeys():
@@ -57,9 +57,8 @@ def category_select(item,dic):
 
 
 cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'],kill_tags=['a'])
+
 def spiderboy(cate):
-
-
     page = requests.get(cate)
     html = lxml.html.fromstring(page.content)
     for item in html.cssselect('.listDetail'):
@@ -180,7 +179,7 @@ if __name__ == '__main__':
             gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Fod/')),
             gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Drk/')),
             gevent.spawn(spiderboy,('http://taste.chinaluxus.com/Sca/')),
-        ]
+            ]
     )
 
 
