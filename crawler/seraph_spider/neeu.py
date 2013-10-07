@@ -14,10 +14,10 @@ setup_environ(settings)
 from spider.models import Car
 import requests
 import lxml.html
-#from lxml.html.clean import Cleaner
+from lxml.html.clean import Cleaner
 import logging
 import logging.config
-
+import re
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('neeu')
 
@@ -134,6 +134,9 @@ url = [
     'http://www.neeu.com/motor/news/test/',
     'http://www.neeu.com/motor/news/lifestyle/',
 ]
+
+cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=False,kill_tags=['script'])
+
 def category_select(item,dic):
     for i in dic.iterkeys():
         if item in i:
@@ -143,10 +146,12 @@ def category_select(item,dic):
 def nextPage(html,base_url=''):
     logger.info('have many page')
     car_body = lxml.html.tostring(html.cssselect('.content')[0])
+    car_body = cleaner.clean_html(car_body)
     while html.cssselect('.cpagesizebottom a')[-1].text_content() == u'下一页':
         nextpage = requests.get(base_url + html.cssselect('.cpagesizebottom a')[0].get('href'))
         nexthtml = lxml.html.fromstring(nextpage.content)
         body = lxml.html.tostring(nexthtml.cssselect('.content')[0])
+        body = cleaner.clean_html(body)
         car_body += body
         html = nexthtml
     return car_body
@@ -162,7 +167,7 @@ def spiderboy(url):
         car_link = base_url + item.cssselect('.newstext h3 a')[0].get('href')
         logger.info('link: '+car_link)
         try:
-            car_bo = Car.objects.get(car_link = car_link)
+            Car.objects.get(car_link = car_link)
             pass
         except Exception,e:
             car_title = str(item.cssselect('.newstext h3 a')[0].text_content())
@@ -181,11 +186,20 @@ def spiderboy(url):
                     mid_body = nextPage(innerhtml,base_url)
                 else:
                     mid_body = lxml.html.tostring(innerhtml.cssselect('.content')[0])
+                    mid_body = cleaner.clean_html(mid_body)
 
             except:
                 mid_body = lxml.html.tostring(innerhtml.cssselect('.content')[0])
+                mid_body = cleaner.clean_html(mid_body)
 
+            pattern = re.compile(r'src="')
 
+            pattern2 = re.compile(r'href="')
+            ins = 'src="'+base_url
+            ins2 = 'href="'+base_url
+
+            mid_body = pattern.sub(ins,mid_body)
+            mid_body = pattern2.sub(ins2,mid_body)
 
             car_body = mid_body
             logger.info('body: catch')
@@ -204,60 +218,36 @@ def spiderboy(url):
             ca.save()
             logger.info('done one')
 
+def ll1():
+    for i in url[0:10]:
+        spiderboy(i)
+
+def ll2():
+    for i in url[10:20]:
+        spiderboy(i)
+
+def ll3():
+    for i in url[20:30]:
+        spiderboy(i)
+
+def ll4():
+    for i in url[30:40]:
+        spiderboy(i)
+
+def ll5():
+    for i in url[40:50]:
+        spiderboy(i)
+
 
 if __name__ == '__main__':
     gevent.joinall(
         [
-            gevent.spawn(spiderboy,(url[1])),
-            gevent.spawn(spiderboy,(url[2])),
-            gevent.spawn(spiderboy,(url[3])),
-            gevent.spawn(spiderboy,(url[4])),
-            gevent.spawn(spiderboy,(url[5])),
-            gevent.spawn(spiderboy,(url[6])),
-            gevent.spawn(spiderboy,(url[7])),
-            gevent.spawn(spiderboy,(url[8])),
-            gevent.spawn(spiderboy,(url[9])),
-            gevent.spawn(spiderboy,(url[10])),
-            gevent.spawn(spiderboy,(url[11])),
-            gevent.spawn(spiderboy,(url[12])),
-            gevent.spawn(spiderboy,(url[13])),
-            gevent.spawn(spiderboy,(url[14])),
-            gevent.spawn(spiderboy,(url[15])),
-            gevent.spawn(spiderboy,(url[16])),
-            gevent.spawn(spiderboy,(url[17])),
-            gevent.spawn(spiderboy,(url[18])),
-            gevent.spawn(spiderboy,(url[19])),
-            gevent.spawn(spiderboy,(url[20])),
-            gevent.spawn(spiderboy,(url[21])),
-            gevent.spawn(spiderboy,(url[22])),
-            gevent.spawn(spiderboy,(url[23])),
-            gevent.spawn(spiderboy,(url[24])),
-            gevent.spawn(spiderboy,(url[25])),
-            gevent.spawn(spiderboy,(url[26])),
-            gevent.spawn(spiderboy,(url[27])),
-            gevent.spawn(spiderboy,(url[28])),
-            gevent.spawn(spiderboy,(url[29])),
-            gevent.spawn(spiderboy,(url[30])),
-            gevent.spawn(spiderboy,(url[31])),
-            gevent.spawn(spiderboy,(url[32])),
-            gevent.spawn(spiderboy,(url[33])),
-            gevent.spawn(spiderboy,(url[34])),
-            gevent.spawn(spiderboy,(url[35])),
-            gevent.spawn(spiderboy,(url[36])),
-            gevent.spawn(spiderboy,(url[37])),
-            gevent.spawn(spiderboy,(url[38])),
-            gevent.spawn(spiderboy,(url[39])),
-            gevent.spawn(spiderboy,(url[40])),
-            gevent.spawn(spiderboy,(url[41])),
-            gevent.spawn(spiderboy,(url[42])),
-            gevent.spawn(spiderboy,(url[43])),
-            gevent.spawn(spiderboy,(url[44])),
-            gevent.spawn(spiderboy,(url[45])),
-            gevent.spawn(spiderboy,(url[46])),
-            gevent.spawn(spiderboy,(url[47])),
-            gevent.spawn(spiderboy,(url[48])),
-            gevent.spawn(spiderboy,(url[49])),
-            gevent.spawn(spiderboy,(url[0])),
+            gevent.spawn(ll1),
+            gevent.spawn(ll2),
+            gevent.spawn(ll3),
+            gevent.spawn(ll4),
+            gevent.spawn(ll5),
+
             ]
     )
 

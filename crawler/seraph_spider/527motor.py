@@ -53,14 +53,22 @@ def spiderboy(cate):
             writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
 
             mid_body = lxml.html.tostring(innerhtml.cssselect('#article_content')[0])
-            pattern = re.compile(r'src="')
+            #pattern = re.compile(r'src="')
+            #
+            #pattern2 = re.compile(r'href="')
+            #ins = 'src="'+base_url
+            #ins2 = 'href="'+base_url
+            #mid_body = pattern.sub(ins,mid_body)
+            #mid_body = pattern2.sub(ins2,mid_body)
 
-            pattern2 = re.compile(r'href="')
-            ins = 'src="'+base_url
-            ins2 = 'href="'+base_url
+            pattern = re.compile(r'[src|href]="([^http].*?[\.jpg])"', re.VERBOSE)
 
-            mid_body = pattern.sub(ins,mid_body)
-            mid_body = pattern2.sub(ins2,mid_body)
+            test = pattern.findall(mid_body)
+            test = list(set(test))
+
+            for i in test:
+                mid_body = mid_body.replace(i,base_url+i)
+
 
             car_body = writer+mid_body
 
