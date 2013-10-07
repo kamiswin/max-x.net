@@ -31,7 +31,9 @@
                 <div class="row-fluid">
                     <div class="span6">
                         <ul class="nav nav-pills">
+
                             <li><a href="{% url 'spider:index' %}">多可笑</a></li>
+                            {% if not site %}
                             <!--<li><a href="{% url 'spider:index' %}?cate=car">汽车</a></li>-->
                             <li><a href="{% url 'spider:index' %}car">汽车</a></li>
                             <li><a href="{% url 'spider:index' %}boat">游艇</a></li>
@@ -39,6 +41,14 @@
                             <li><a href="{% url 'spider:index' %}motorbike">摩托车</a></li>
                             <li><a href="{% url 'spider:index' %}house">豪宅</a></li>
                             <li><a href="{% url 'spider:index' %}food">美食</a></li>
+                            {% else %}
+                            <li><a href="{% url 'spider:index' %}car/?site={{ site }}">汽车</a></li>
+                            <li><a href="{% url 'spider:index' %}boat/?site={{ site }}">游艇</a></li>
+                            <li><a href="{% url 'spider:index' %}plane/?site={{ site }}">飞机</a></li>
+                            <li><a href="{% url 'spider:index' %}motorbike/?site={{ site }}">摩托车</a></li>
+                            <li><a href="{% url 'spider:index' %}house/?site={{ site }}">豪宅</a></li>
+                            <li><a href="{% url 'spider:index' %}food/?site={{ site }}">美食</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                     <div class="span4">

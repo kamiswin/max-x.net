@@ -79,6 +79,7 @@ def listing(request,car_cate=None):
         'car_list':car,
         'car_rencent':car_rencent,
         'username':username,
+        'site':site,
     })
     return HttpResponse(template.render(context))
 

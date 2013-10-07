@@ -23,7 +23,11 @@
     <div class="pagination pagination-centered">
         <span class="step-links">
             {% if car_list.has_previous %}
+            {% if not site %}
                 <a href="?page={{ car_list.previous_page_number }}">previous</a>
+            {% else %}
+                <a href="?page={{ car_list.previous_page_number }}&site={{ site }}">previous</a>
+            {% endif %}
             {% endif %}
 
             <span class="current">
@@ -31,7 +35,11 @@
             </span>
 
             {% if car_list.has_next %}
+            {% if not site %}
                 <a href="?page={{ car_list.next_page_number }}">next</a>
+            {% else %}
+            <a href="?page={{ car_list.next_page_number }}&site={{ site }}">next</a>
+            {% endif %}
             {% endif %}
         </span>
     </div>
