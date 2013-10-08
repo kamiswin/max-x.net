@@ -212,14 +212,6 @@ def spiderboy(url):
                 mid_body = lxml.html.tostring(innerhtml.cssselect('.content')[0])
                 mid_body = cleaner.clean_html(mid_body)
 
-            #pattern = re.compile(r'src="')
-            #
-            #pattern2 = re.compile(r'href="')
-            #ins = 'src="'+base_url
-            #ins2 = 'href="'+base_url
-            #
-            #mid_body = pattern.sub(ins,mid_body)
-            #mid_body = pattern2.sub(ins2,mid_body)
             pattern = re.compile(r'(?:src|href)="([^http].*?[\.jpg])"', re.VERBOSE)
 
             test = pattern.findall(mid_body)

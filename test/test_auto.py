@@ -9,7 +9,7 @@ page = requests.get(autohome_url)
 
 
 print 'ATitle' in page
-html = lxml.html.fromstring(page.content.decode('gbk','ignore'))
+html = lxml.html.fromstring(page.content.decode('gb2312','ignore'))
 for i in html.cssselect('#ATitle'):
 
     print 'car_title',i.text_content()
