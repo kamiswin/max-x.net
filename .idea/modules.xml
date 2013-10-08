@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../flask-test/.idea/flask-test.iml" filepath="$PROJECT_DIR$/../flask-test/.idea/flask-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/max-x.net.iml" filepath="$PROJECT_DIR$/.idea/max-x.net.iml" />
     </modules>
   </component>
