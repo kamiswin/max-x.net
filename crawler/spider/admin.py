@@ -20,7 +20,7 @@ class CarAdmin(admin.ModelAdmin):
                    'car_source',
                    ]
 
-    search_fields = ['car_title','car_des','car_body']
+    search_fields = ['car_title']
 
     date_hierarchy = 'car_time'
 

@@ -153,26 +153,30 @@ def category_select(item,dic):
             return dic.get(i)
 
 def nextPage(html,base_url=''):
-    #print 111
     logger.info('have many page')
     car_body = lxml.html.tostring(html.cssselect('.content')[0])
     car_body = cleaner.clean_html(car_body)
-    while html.cssselect('.cpagesizebottom a')[-1].text_content() == u'下一页':
-        #print 222
-        #print html.cssselect('.cpagesizebottom a')[0].get('href')
-        nextpage = requests.get(base_url + html.cssselect('.cpagesizebottom a')[-1].get('href'),headers=headers)
-        #print 333
+    print 111
+    while True:
+        flag = html.cssselect('.cpagesizebottom a')[-1].text_content() == u'下一页'
+
+        print 'flag',flag
+
+        if not flag:
+            break
+
+        print 22
+        nextpage = requests.get(base_url + html.cssselect('.cpagesizebottom a')[0].get('href'),headers=headers)
+        print (base_url + html.cssselect('.cpagesizebottom a')[0].get('href'))
         nexthtml = lxml.html.fromstring(nextpage.content.decode('gbk','ignore'))
-        #print 444
+        print 33
         body = lxml.html.tostring(nexthtml.cssselect('.content')[0])
-        #print 555
         body = cleaner.clean_html(body)
-        #print 666
+        print 44
         car_body += body
-        #print 777
         html = nexthtml
-        #print 888
-    #print 999
+        print 55
+    print 66
     return car_body
 
 
@@ -271,11 +275,17 @@ def ll5():
 if __name__ == '__main__':
     gevent.joinall(
         [
-            gevent.spawn(ll1),
-            gevent.spawn(ll2),
-            gevent.spawn(ll3),
-            gevent.spawn(ll4),
-            gevent.spawn(ll5),
+            #gevent.spawn(ll1),
+            #gevent.spawn(ll2),
+            #gevent.spawn(ll3),
+            #gevent.spawn(ll4),
+            #gevent.spawn(ll5),
+            gevent.spawn(spiderboy,('http://www.neeu.com/motor/news/lifestyle/')),
+            gevent.spawn(spiderboy,('http://www.neeu.com/motor/news/test/')),
+            gevent.spawn(spiderboy,('http://www.neeu.com/motor/news/design/')),
+            gevent.spawn(spiderboy,('http://www.neeu.com/motor/news/event/')),
+            gevent.spawn(spiderboy,('http://www.neeu.com/motor/news/top/')),
+
             ]
     )
 

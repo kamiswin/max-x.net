@@ -46,22 +46,15 @@ def spiderboy(cate):
         except Exception,e:
             car_title = str(item.cssselect('.xs2 a')[0].text_content())
             car_icon = base_url + item.cssselect('.atc img')[0].get('src')
-            car_des = str(item.cssselect('.atc')[0].text_content())
+            car_des = str(item.cssselect('.xs2.cl')[0].text_content())
 
             innerpage = requests.get(car_link)
             innerhtml = lxml.html.fromstring(innerpage.content)
             writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
 
             mid_body = lxml.html.tostring(innerhtml.cssselect('#article_content')[0])
-            #pattern = re.compile(r'src="')
-            #
-            #pattern2 = re.compile(r'href="')
-            #ins = 'src="'+base_url
-            #ins2 = 'href="'+base_url
-            #mid_body = pattern.sub(ins,mid_body)
-            #mid_body = pattern2.sub(ins2,mid_body)
 
-            pattern = re.compile(r'[src|href]="([^http].*?[\.jpg])"', re.VERBOSE)
+            pattern = re.compile(r'(?:src|href)="([^http].*?[\.jpg])"', re.VERBOSE)
 
             test = pattern.findall(mid_body)
             test = list(set(test))
