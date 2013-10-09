@@ -14,8 +14,9 @@
 
 /*main*/
 .main { padding: 15px; background-color: #fff; }
-.main-list li { margin: 0; padding: 0; display: inline-block; width: 50%; }
-    .main-list li .thumbnail { margin: 6px 6px; }
+.main-list li { padding: 0; display: inline-block; width: 95%; }
+/*.main-list li { margin: 0; padding: 0; display: inline-block; width: 50%; }*/
+    .main-list li .thumbnail { margin: 6px 6px; width: 100% ;height: 100%}
 .main-list h3 { margin: 0; }
 .main-list span { display: inline-block; padding: 0 5px; }
 /*aside*/

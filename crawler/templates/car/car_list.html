@@ -6,13 +6,20 @@
     {% for i in car_list %}
 
     <li>
-        <div class="thumbnail" style="height:310px;width:290px;overflow:hidden;">
-            <a href="{% url 'spider:detail' i.id %}">
-                <img style="height:103px;width:238px;overflow:hidden;" src="{{ i.car_icon }}"/></a>
-            <div class="caption">
-                <h3><a href="{% url 'spider:detail' i.id %}" class="text-warning">{{ i.car_title }}</a> </h3>
+        <div class="thumbnail">
+            <!--<div class="thumbnail" style="height:310px;width:290px;overflow:hidden;">-->
+
+            <div class="span3">
+                <a href="{% url 'spider:detail' i.id %}">
+                    <img src="{{ i.car_icon }}"/></a>
             </div>
-            <p>{{ i.car_des }}</p>
+            <div>
+                <!--<img style="height:103px;width:238px;overflow:hidden;" src="{{ i.car_icon }}"/></a>-->
+                <div class="caption">
+                    <h3><a href="{% url 'spider:detail' i.id %}" class="text-warning">{{ i.car_title }}</a> </h3>
+                </div>
+                <p>{{ i.car_des }}</p>
+            </div>
         </div>
     </li>
 
