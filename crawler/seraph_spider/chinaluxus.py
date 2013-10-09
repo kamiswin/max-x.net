@@ -17,6 +17,7 @@ import lxml.html
 from lxml.html.clean import Cleaner
 import logging
 import logging.config
+import re
 
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('chinaluxus')
@@ -56,7 +57,7 @@ def category_select(item,dic):
 
 
 
-cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'],kill_tags=['a'])
+cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'])
 
 def spiderboy(cate):
     page = requests.get(cate)
@@ -103,8 +104,10 @@ def spiderboy(cate):
             car_cate = category_select(cate,catechoice)
             logger.info('category: '+car_cate)
 
-
+            r = re.compile(r'<a>|</a>')
             car_body = cleaner.clean_html(car_body)
+            car_body = r.sub('',car_body)
+
 
             ca = Car(car_title=car_title,
                      car_des=car_des,
