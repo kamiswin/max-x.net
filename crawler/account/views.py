@@ -14,13 +14,15 @@ from models import UserProfile
 
 @csrf_protect
 def register(request):
-    return render('hello')
+    rf = RegisterForm()
+    return render('regist.html',{'rf':rf},context_instance=RequestContext(request))
 
 
 @csrf_protect
 def login(request):
-    return 'hello2'
+    lf = LoginForm()
+    return render('login.html',{'lf':lf},context_instance=RequestContext(request))
 
 
 def logout(request):
-    return 'hello3'
+    return HttpResponseRedirect('/')
