@@ -20,4 +20,5 @@ urlpatterns += patterns((''),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': '/home/gs/blog/static'}
     ),
+    (r'^comments/', include('django.contrib.comments.urls')),
 )

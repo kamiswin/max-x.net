@@ -34,6 +34,8 @@ def cut(content):
         ncontent = content.split('相关阅读')[0]+'</p>'
     elif u'更多阅读' in content:
         ncontent = content.split('更多阅读')[0]+'</p>'
+    elif u'相关链接' in content:
+        ncontent = content.split('相关链接')[0]+'</p>'
     else:
         ncontent = content
 

@@ -49,7 +49,7 @@ def listing(request,car_cate=None):
     if 'site' in request.GET:
         site = request.GET['site']
     if 'query' in request.GET:
-       query = request.GET['query']
+        query = request.GET['query']
     if site:
         if car_cate:
             car_list = Car.objects.filter(car_source=site,car_cate=car_cate).order_by('-car_time')
@@ -80,6 +80,7 @@ def listing(request,car_cate=None):
         'car_rencent':car_rencent,
         'username':username,
         'site':site,
+        'query':query,
     })
     return HttpResponse(template.render(context))
 
