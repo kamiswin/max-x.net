@@ -18,13 +18,7 @@ class Car(models.Model):
 
 
 
-class User(models.Model):
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=100)
-    signtime = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        return self.username
 
 
 

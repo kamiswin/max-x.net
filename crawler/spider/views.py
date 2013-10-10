@@ -5,9 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, RequestContext
 from django.template import Context,loader
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from spider.models import Car
-from spider.models import User
-from spider.forms import UserForm
+from models import Car
+#from spider.forms import UserForm
 from django.views.decorators.csrf import csrf_protect
 import logging
 #from django.db.models import Q
@@ -23,26 +22,27 @@ def index(request):
     )
     return HttpResponse(template.render(context))
 
+
 @csrf_protect
 def detail(request, car_id):
     username = request.session.get('username','')
     try:
         car = Car.objects.get(pk=car_id)
         car_rencent = Car.objects.all().order_by('-car_time')[:10]
-        template = loader.get_template('car_detail.html')
-        context = Context({
-            'car':car,
-            'car_rencent':car_rencent,
-            'username':username
-        })
+
     except Car.DoesNotExist:
         raise Http404
 
-    return HttpResponse(template.render(context))
+    return render_to_response("car_detail.html",{
+        'car':car,
+        'car_rencent':car_rencent,
+        'username':username,
+        },context_instance=RequestContext(request))
+
 
 @csrf_protect
 def listing(request,car_cate=None):
-    username = request.session.get('username','')
+    #username = request.session.get('username','')
 
     query = None
     site = None
@@ -78,48 +78,50 @@ def listing(request,car_cate=None):
     context = Context({
         'car_list':car,
         'car_rencent':car_rencent,
-        'username':username,
+        #'username':username,
         'site':site,
         'query':query,
-    })
+        })
     return HttpResponse(template.render(context))
 
-@csrf_protect
-def regist(request):
-    if request.method == 'POST':
-        uf = UserForm(request.POST)
-        if uf.is_valid():
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            User.objects.create(username = username,password = password)
-            return HttpResponseRedirect('/login/')
-    else:
-        uf = UserForm()
-    return render_to_response('regist.html',{'uf':uf},context_instance=RequestContext(request))
 
-@csrf_protect
-def login(request):
-    if request.method == 'POST':
-        uf = UserForm(request.POST)
-        if uf.is_valid():
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            user = User.objects.filter(username__exact = username, password__exact = password)
-            if user:
-                request.session['username'] = username
-                return HttpResponseRedirect('/')
-            else:
-                return HttpResponseRedirect('/login/')
-    else:
-        uf = UserForm()
-    return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(request))
-
-@csrf_protect
-def logout(request):
-    session = request.session.get('username', False)
-    if session:
-        del request.session['username']
-        return render_to_response('logout.html',{'username':session},context_instance=RequestContext(request))
-    else:
-        #return HttpResponse('please login!')
-        return HttpResponseRedirect('/')
+#@csrf_protect
+#def regist(request):
+#    if request.method == 'POST':
+#        uf = UserForm(request.POST)
+#        if uf.is_valid():
+#            username = uf.cleaned_data['username']
+#            password = uf.cleaned_data['password']
+#            User.objects.create(username = username,password = password)
+#            return HttpResponseRedirect('/login/')
+#    else:
+#        uf = UserForm()
+#    return render_to_response('regist.html',{'uf':uf},context_instance=RequestContext(request))
+#
+#
+#@csrf_protect
+#def login(request):
+#    if request.method == 'POST':
+#        uf = UserForm(request.POST)
+#        if uf.is_valid():
+#            username = uf.cleaned_data['username']
+#            password = uf.cleaned_data['password']
+#            user = User.objects.filter(username__exact = username, password__exact = password)
+#            if user:
+#                request.session['username'] = username
+#                return HttpResponseRedirect('/')
+#            else:
+#                return HttpResponseRedirect('/login/')
+#    else:
+#        uf = UserForm()
+#    return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(request))
+#
+#@csrf_protect
+#def logout(request):
+#    session = request.session.get('username', False)
+#    if session:
+#        del request.session['username']
+#        return render_to_response('logout.html',{'username':session},context_instance=RequestContext(request))
+#    else:
+#        #return HttpResponse('please login!')
+#        return HttpResponseRedirect('/')

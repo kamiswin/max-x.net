@@ -1,6 +1,0 @@
-__author__ = 'max'
-from django import forms
-
-class UserForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
