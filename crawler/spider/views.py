@@ -25,7 +25,7 @@ def index(request):
 
 @csrf_protect
 def detail(request, car_id):
-    username = request.session.get('username','')
+    #username = request.session.get('username','')
     try:
         car = Car.objects.get(pk=car_id)
         car_rencent = Car.objects.all().order_by('-car_time')[:10]
@@ -42,7 +42,7 @@ def detail(request, car_id):
 
 @csrf_protect
 def listing(request,car_cate=None):
-    #username = request.session.get('username','')
+    username = request.session.get('username','')
 
     query = None
     site = None
