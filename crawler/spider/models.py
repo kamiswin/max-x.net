@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Car(models.Model):
-    car_title = models.CharField(max_length=50)
+    car_title = models.CharField(max_length=100)
     car_icon = models.CharField(max_length=100)
     car_des = models.TextField()
     car_link = models.CharField(max_length=100)
