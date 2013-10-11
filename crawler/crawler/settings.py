@@ -106,7 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 
@@ -155,14 +155,14 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
 
-     'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
+    # 'formatters': {
+    #    'verbose': {
+    #        'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+    #    },
+    #    'simple': {
+    #        'format': '%(levelname)s %(message)s'
+    #    },
+    #},
 
 
     'filters': {

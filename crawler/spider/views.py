@@ -32,12 +32,13 @@ def listing(request,car_cate=None):
 
     query = None
     site = None
-    logger.info('james')
+    #logger.info('james')
     if 'site' in request.GET:
         site = request.GET['site']
 
     if 'query' in request.GET:
         query = request.GET['query']
+
     if site:
         if car_cate:
             car_list = Car.objects.filter(car_source=site,car_cate=car_cate).order_by('-car_time')
@@ -53,8 +54,10 @@ def listing(request,car_cate=None):
     car_rencent = Car.objects.all().order_by('-car_time')[:10]
     #car_list = Car.objects.filter(car_cate='car')
     paginator = Paginator(car_list,10)
-
-    page = request.GET.get('page')
+    try:
+        page = request.GET.get('page','1')
+    except:
+        page = 1
 
     try:
         car = paginator.page(page)
@@ -62,7 +65,16 @@ def listing(request,car_cate=None):
         car = paginator.page(1)
     except EmptyPage:
         car = paginator.page(paginator.num_pages)
-    return render_to_response('car_list.html',locals(),context_instance=RequestContext(request))
+
+
+
+    return render_to_response('car_list.html',{
+            'query':query,
+            'site':site,
+            'car_list':car,
+            'car_rencent':car_rencent,
+            #'car':car,
+        },context_instance=RequestContext(request))
 
 
 def details_show_comment(request, id=''):

@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     #url(r'logout/$',views.logout,name='logout'),
     url(r'^(?P<car_cate>[a-z]+)/$',views.listing, name='cate'),
     url(r'^(?P<car_id>\d+)/$',views.detail,name='detail'),
-    url(r'^blog/(?P<id>\d+)/commentshow/$', views.details_show_comment, name='showcomment'),
+    url(r'^(?P<id>\d+)/commentshow/$', views.details_show_comment, name='showcomment'),
 
 )
