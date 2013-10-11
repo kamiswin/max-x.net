@@ -53,8 +53,8 @@ def login(request):
             try:
                 user = User.objects.get(username=data['username'])
             except User.DoesNotExist:
-                messages.error(request,"这个email还没注册过，<a href=\"/accounts/regist/\">果断注册</a>")
-                return render('account_login.html',locals(),context_instance=RequestContext(request))
+                messages.error(request,"这个email还没注册过，果断注册")
+                return render('login.html',locals(),context_instance=RequestContext(request))
 
             user = authenticate(username=data['username'],password=data['password'])
             if user is not None:
