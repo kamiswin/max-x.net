@@ -1,26 +1,15 @@
 # -*- encoding:utf-8 -*-
 # Create your views here.
 from django.http import Http404
-from django.http import HttpResponse, HttpResponseRedirect
+#from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, RequestContext
-from django.template import Context,loader
+#from django.template import Context,loader
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from models import Car
-#from spider.forms import UserForm
 from django.views.decorators.csrf import csrf_protect
 import logging
-#from django.db.models import Q
 
 logger = logging.getLogger(__name__)
-
-def index(request):
-    car_list = Car.objects.all()
-    template = loader.get_template('car_list.html')
-    context = RequestContext(
-        {'car_list':car_list,}
-
-    )
-    return HttpResponse(template.render(context))
 
 
 @csrf_protect
@@ -33,16 +22,13 @@ def detail(request, car_id):
     except Car.DoesNotExist:
         raise Http404
 
-    return render_to_response("car_detail.html",{
-        'car':car,
-        'car_rencent':car_rencent,
-        'username':username,
-        },context_instance=RequestContext(request))
+    return render_to_response('car_detail.html',locals(),context_instance=RequestContext(request))
 
 
 @csrf_protect
 def listing(request,car_cate=None):
-    username = request.session.get('username','')
+    #username = request.session.get('username','')
+
 
     query = None
     site = None
@@ -74,15 +60,7 @@ def listing(request,car_cate=None):
         car = paginator.page(1)
     except EmptyPage:
         car = paginator.page(paginator.num_pages)
-    template = loader.get_template('car_list.html')
-    context = Context({
-        'car_list':car,
-        'car_rencent':car_rencent,
-        #'username':username,
-        'site':site,
-        'query':query,
-        })
-    return HttpResponse(template.render(context))
+    return render_to_response('car_list.html',locals(),context_instance=RequestContext(request))
 
 
 #@csrf_protect

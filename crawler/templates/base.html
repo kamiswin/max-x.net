@@ -60,12 +60,12 @@
                     </div>
                     <div class="span2">
                         <ul class="nav nav-pills">
-                            <span>{{ username }}</span>
-                            {% if username %}
-                            <a href="/account/logout/">logout</a>
+                            <!--<span>{{ username }}</span>-->
+                            {% if user.is_authenticated %}
+                                <a href="/account/logout/">{{ user.username }}</a>
                             {% else %}
-                            <a href="/account/login/">login</a>
-                            <a href="/account/regist/">regist</a>
+                                <a href="/account/login/">login</a>
+                                <a href="/account/regist/">regist</a>
                             {% endif %}
                         </ul>
                     </div>
