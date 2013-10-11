@@ -4,10 +4,17 @@
     <title></title>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ rf.as_p }}
-        <input type="submit" value="regist"/>
-    </form>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ rf.as_p }}
+    <input type="submit" value="regist"/>
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} > {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 </body>
 </html>

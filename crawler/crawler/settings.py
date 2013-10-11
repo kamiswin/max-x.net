@@ -109,6 +109,9 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
+
+
 ROOT_URLCONF = 'crawler.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -147,9 +150,20 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+
+     'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+
 
     'filters': {
         'require_debug_false': {
@@ -171,6 +185,8 @@ LOGGING = {
         },
     }
 }
+
+
 #LOGGING = {
 #    'version': 1,
 #    'disable_existing_loggers': True,

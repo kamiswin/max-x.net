@@ -32,8 +32,10 @@ def listing(request,car_cate=None):
 
     query = None
     site = None
+    logger.info('james')
     if 'site' in request.GET:
         site = request.GET['site']
+
     if 'query' in request.GET:
         query = request.GET['query']
     if site:
@@ -61,6 +63,11 @@ def listing(request,car_cate=None):
     except EmptyPage:
         car = paginator.page(paginator.num_pages)
     return render_to_response('car_list.html',locals(),context_instance=RequestContext(request))
+
+
+def details_show_comment(request, id=''):
+    details = Car.objects.get(id=id)
+    return render_to_response('details_comments_show.html', {"details": details})
 
 
 #@csrf_protect
