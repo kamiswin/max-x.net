@@ -1,7 +1,9 @@
 {% extends "car_base.html" %}
+{% load pagination_tags %}
 {% block title %}多可笑的清单{% endblock %}
 {% block content %}
 {% if car_list %}
+{% autopaginate car_list 10 %}
 <ul class="thumbnails main-list">
     {% for i in car_list %}
 
@@ -29,40 +31,10 @@
 <li>
     <div class="pagination pagination-centered">
         <span class="step-links">
-            {% if car_list.has_previous %}
-            <!--{% if not site %}-->
-                <!--<a href="?page={{ car_list.previous_page_number }}">previous</a>-->
-            <!--{% else %}-->
-                <!--<a href="?page={{ car_list.previous_page_number }}&site={{ site }}">previous</a>-->
-            <!--{% endif %}-->
 
-            {% if not site and not query %}
-                <a href="?page={{ car_list.previous_page_number }}">previous</a>
-            {% elif not site and query %}
-                <a href="?page={{ car_list.previous_page_number }}&query={{ query }}">previous</a>
-            {% elif not query and site %}
-                <a href="?page={{ car_list.previous_page_number }}&site={{ site }}">previous</a>
-            {% else %}
-                <a href="?page={{ car_list.previous_page_number }}&site={{ site }}&query={{ query }}">previous</a>
-            {% endif %}
 
-            {% endif %}
 
-            <span class="current">
-                Page {{ car_list.number }} of {{ car_list.paginator.num_pages }}.
-            </span>
-
-            {% if car_list.has_next %}
-            {% if not site and not query %}
-                <a href="?page={{ car_list.next_page_number }}">next</a>
-            {% elif not site and query %}
-                <a href="?page={{ car_list.next_page_number }}&query={{ query }}">next</a>
-            {% elif not query and site %}
-                <a href="?page={{ car_list.next_page_number }}&site={{ site }}">next</a>
-            {% else %}
-                <a href="?page={{ car_list.next_page_number }}&site={{ site }}&query={{ query }}">next</a>
-            {% endif %}
-            {% endif %}
+{% paginate %}
         </span>
     </div>
 </li>

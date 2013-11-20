@@ -6,10 +6,10 @@ monkey.patch_all()
 import os
 import sys
 selfpath = os.path.split(os.path.realpath(__file__))[0]
-PATH = os.path.abspath(os.path.join(selfpath,'..'))
+PATH = os.path.abspath(os.path.join(selfpath, '..'))
 sys.path.append(PATH)
-from crawler import settings          #your project settings file
-from django.core.management import setup_environ     #environment setup function
+from crawler import settings  # your project settings file
+from django.core.management import setup_environ  # environment setup function
 setup_environ(settings)
 from spider.models import Car
 import requests
@@ -21,13 +21,15 @@ import logging.config
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'],kill_tags=['a'])
+cleaner = Cleaner(style=True, scripts=True, page_structure=False,
+                  safe_attrs_only=True, safe_attrs=['src'], kill_tags=['a'])
 
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('527motor')
 
 
 base_url = 'http://www.527motor.com/'
+
 
 def spiderboy(cate):
 
@@ -43,7 +45,7 @@ def spiderboy(cate):
             Car.objects.get(car_link=car_link)
             logger.info('already have ' + car_link)
             pass
-        except Exception,e:
+        except Exception, e:
             car_title = str(item.cssselect('.xs2 a')[0].text_content())
             car_icon = base_url + item.cssselect('.atc img')[0].get('src')
             car_des = str(item.cssselect('.xs2.cl')[0].text_content())
@@ -52,18 +54,19 @@ def spiderboy(cate):
             innerhtml = lxml.html.fromstring(innerpage.content)
             writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
 
-            mid_body = lxml.html.tostring(innerhtml.cssselect('#article_content')[0])
+            mid_body = lxml.html.tostring(
+                innerhtml.cssselect('#article_content')[0])
 
-            pattern = re.compile(r'(?:src|href)="([^http].*?[\.jpg])"', re.VERBOSE)
+            pattern = re.compile(
+                r'(?:src|href)="([^http].*?[\.jpg])"', re.VERBOSE)
 
             test = pattern.findall(mid_body)
             test = list(set(test))
 
             for i in test:
-                mid_body = mid_body.replace(i,base_url+i)
+                mid_body = mid_body.replace(i, base_url + i)
 
-
-            car_body = writer+mid_body
+            car_body = writer + mid_body
 
             ca = Car(car_title=car_title,
                      car_des=car_des,
@@ -80,12 +83,16 @@ def spiderboy(cate):
 if __name__ == '__main__':
     gevent.joinall(
         [
-            gevent.spawn(spiderboy,('http://www.527motor.com/portal.php?mod=list&catid=2')),
-            gevent.spawn(spiderboy,('http://www.527motor.com/portal.php?mod=list&catid=58')),
-            gevent.spawn(spiderboy,('http://www.527motor.com/portal.php?mod=list&catid=60')),
-            gevent.spawn(spiderboy,('http://www.527motor.com/portal.php?mod=list&catid=62')),
+            gevent.spawn(spiderboy,
+                         ('http://www.527motor.com/portal.php?mod=list&catid=2')),
+            gevent.spawn(
+                spiderboy, (
+                    'http://www.527motor.com/portal.php?mod=list&catid=58')),
+            gevent.spawn(
+                spiderboy, (
+                    'http://www.527motor.com/portal.php?mod=list&catid=60')),
+            gevent.spawn(
+                spiderboy, (
+                    'http://www.527motor.com/portal.php?mod=list&catid=62')),
         ]
     )
-
-
-
