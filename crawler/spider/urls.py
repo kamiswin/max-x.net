@@ -4,6 +4,7 @@ from spider import views
 
 urlpatterns = patterns('',
     url(r'^$',views.listing, name='index'),
+    url(r'^v1/list/$',views.listing_ajax, name='index_ajax'),
     #url(r'regist/$',views.regist,name='regist'),
     #url(r'login/$',views.login,name='login'),
     #url(r'logout/$',views.logout,name='logout'),
