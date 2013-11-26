@@ -1,5 +1,5 @@
 <uwsgi>
-    <socket>:8077</socket>
+    <socket>127.0.0.1:8077</socket>
     <chdir>/root/maxfile/max-x.net/crawler</chdir>
     <module>django_wsgi</module>
     <processes>4</processes> <!-- 进程数 -->
