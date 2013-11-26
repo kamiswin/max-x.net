@@ -14,6 +14,11 @@ framework.
 
 """
 import os
+import sys
+#from django.core.handlers.wsgi import WSGIHandler
+
+#sys.path.append('/root/maxfile/max-x.net')
+
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
