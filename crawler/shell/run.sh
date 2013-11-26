@@ -11,7 +11,7 @@ NEW_COM=$(cd $COM_PATH;pwd)
 echo $NEW_COM
 
 source /usr/local/bin/virtualenvwrapper.sh
-workon max.net
+workon max-xn.com
 
 export PYTHONPATH=$NEW_COM:$PYTHONPATH
 
