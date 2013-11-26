@@ -52,13 +52,14 @@ def listing(request,car_cate=None):
     return render_to_response('car_list.html',{
             'query':query,
             'site':site,
-            #'car_list':car_list,
+            'car_list':car_list,
             'car_rencent':car_rencent,
         },context_instance=RequestContext(request))
 
 
 #@csrf_protect
 def listing_ajax(request,car_cate=None):
+    nums = 10
     query = None
     site = None
     if 'site' in request.GET:
@@ -66,6 +67,12 @@ def listing_ajax(request,car_cate=None):
 
     if 'query' in request.GET:
         query = request.GET['query']
+
+    if 'nums' in request.GET:
+        nums = request.GET['nums']
+        nums = int(nums)
+    if 'category' in request.GET:
+        car_cate = request.GET['category']
 
     if site:
         if car_cate:
@@ -79,7 +86,7 @@ def listing_ajax(request,car_cate=None):
     else:
         car_list = Car.objects.all().order_by('-car_time')
 
-    car_list = car_list[:10]
+    car_list = car_list[nums:nums+10]
 
     car_rencent = Car.objects.all().order_by('-car_time')[:10]
 

@@ -2,33 +2,79 @@
 {% block title %}多可笑的清单{% endblock %}
 {% block content %}
 
-    <ul class="thumbnails main-list">
-    </ul>
+<ul class="thumbnails main-list">
+    {% for i in car_list %}
+    <li>
+        <div class="thumbnail" style="overflow: hidden">
+            <div class="span4" style="float: left;margin: 10px" >
+                <a href="{% url 'spider:detail' i.id %}">
+                    <img src="{{ i.car_icon }}"/></a>
+
+            </div>
+            <div>
+                <div class="caption" style="overflow: hidden">
+                    <h3><a href="{% url 'spider:detail' i.id %}" class="text-warning">{{ i.car_title }}</a> </h3>
+                </div>
+                <p style="overflow: hidden">{{ i.car_des }}</p>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
 {% block script %}
 <script type="text/javascript" charset="utf-8">
-function bindPostCommentHandler() {
-    var loadtime = 0
-//    $('#comment_form form input.submit-preview').remove();
-    $(window).scroll(function() {
-        var h1 = $(window).scrollTop()
-        var data = {
-            nums:10
-        }
+    function bindPostCommentHandler() {
+        var loadtime = 0,
+            num = 10,
+            category = null,
+            query = null,
+            site = null,
+            data = null;
+        $(window).scroll(function() {
+            var h1 = $('ul.main-list li').eq(num-3).position().top,
+                h0 = $(window).scrollTop(),
+                h2 = $(window).height(),
+                h3 = $(document).height(),
+                h4 = $('div.span12 p.text-center a').height() + 400,
+                url = window.location.href;
 
-        if(h1>0&&loadtime==0){
-            $.get("{% url 'spider:index_ajax' %}",data,function(html){
-                        $('div.span8 div.row-fluid ul').eq(0).append(html)
-                        loadtime=loadtime+2
-                    }
-            )
-        }
+            if(url.split('/').length>4){
+                category = url.split('/')[3]
+            }
+            if(url.indexOf('query')>=0){
+                query = url.split('=')[1]
+            }
+            if(url.indexOf('site')>=0){
+                site = url.split('=')[1]
+            }
+            data = {
+                nums:num,
+                query:query,
+                category:category,
+                site:site
+            };
+            if(h0+h2>=h3-h4){
+                loadtime=0;
+            }
+
+            if(h0+h2>=h3-h4&&loadtime==0){
+                $.get("{% url 'spider:index_ajax' %}",data,function(html){
+                            $('div.span8 div.row-fluid ul').eq(0).append(html)
+                        }
+
+                ).fail(function(){
+                            console.log('i,m wrong')
+                        })
+                loadtime=loadtime+1;
+                num = num + 10;
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        bindPostCommentHandler();
     });
-}
-
-$(document).ready(function() {
-    bindPostCommentHandler();
-});
 </script>
 {% endblock %}

@@ -52,7 +52,11 @@ def spiderboy(cate):
 
             innerpage = requests.get(car_link)
             innerhtml = lxml.html.fromstring(innerpage.content)
-            writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
+            print innerpage.content
+            try:
+                writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
+            except:
+                writer = lxml.html.tostring(innerhtml.cssselect('.xg1')[0])
 
             mid_body = lxml.html.tostring(
                 innerhtml.cssselect('#article_content')[0])
@@ -81,18 +85,19 @@ def spiderboy(cate):
 
 
 if __name__ == '__main__':
-    gevent.joinall(
-        [
-            gevent.spawn(spiderboy,
-                         ('http://www.527motor.com/portal.php?mod=list&catid=2')),
-            gevent.spawn(
-                spiderboy, (
-                    'http://www.527motor.com/portal.php?mod=list&catid=58')),
-            gevent.spawn(
-                spiderboy, (
-                    'http://www.527motor.com/portal.php?mod=list&catid=60')),
-            gevent.spawn(
-                spiderboy, (
-                    'http://www.527motor.com/portal.php?mod=list&catid=62')),
-        ]
-    )
+    #gevent.joinall(
+    #    [
+    #        gevent.spawn(spiderboy,
+    #                     ('http://www.527motor.com/portal.php?mod=list&catid=2')),
+    #        gevent.spawn(
+    #            spiderboy, (
+    #                'http://www.527motor.com/portal.php?mod=list&catid=58')),
+    #        gevent.spawn(
+    #            spiderboy, (
+    #                'http://www.527motor.com/portal.php?mod=list&catid=60')),
+    #        gevent.spawn(
+    #            spiderboy, (
+    #                'http://www.527motor.com/portal.php?mod=list&catid=62')),
+    #    ]
+    #)
+    spiderboy('http://www.527motor.com/portal.php?mod=list&catid=2')
