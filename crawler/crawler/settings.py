@@ -4,9 +4,9 @@ import os
 selfpath = os.path.split(os.path.realpath(__file__))[0]
 PATH = os.path.abspath(os.path.join(selfpath,'..'))
 #sys.path.append(PATH)
-DEBUG = False
-TEMPLATE_DEBUG = DEBUG
-
+DEBUG = True
+#TEMPLATE_DEBUG = DEBUG
+ALLOWED_HOSTS = ['localhost']
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
