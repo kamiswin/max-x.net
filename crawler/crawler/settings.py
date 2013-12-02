@@ -6,6 +6,7 @@ PATH = os.path.abspath(os.path.join(selfpath,'..'))
 #sys.path.append(PATH)
 DEBUG = True
 #TEMPLATE_DEBUG = DEBUG
+
 ALLOWED_HOSTS = ['localhost']
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
