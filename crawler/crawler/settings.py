@@ -4,10 +4,10 @@ import os
 selfpath = os.path.split(os.path.realpath(__file__))[0]
 PATH = os.path.abspath(os.path.join(selfpath,'..'))
 #sys.path.append(PATH)
-DEBUG = True
-#TEMPLATE_DEBUG = DEBUG
+DEBUG = False
+# TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['localhost']
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -28,7 +28,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -78,7 +78,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     #'/home/max/PycharmProjects/max-x.net/crawler/static',
-    #PATH + '/static',
+    # PATH + '/static',
 )
 
 # List of finder classes that know how to find static files in
