@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # encoding:utf-8
+import re
 import os,sys
 selfpath = os.path.split(os.path.realpath(__file__))[0]
 PATH = os.path.abspath(os.path.join(selfpath, '..'))
@@ -48,7 +49,7 @@ class Caranddrive(BaseCraw):
                 print 'car_title',car_title
                 car_des = self.locate(node,'div.post')[0].text_content().encode('utf-8')
                 print 'car_des',car_des
-                car_icon = self.locate(node,'div.post p img')[0].get('src')
+                car_icon = self.locate(node,'div.post p img')[0].get('data-lazy-src')
                 car_link = self.locate(node,'h1.postTitle a')[0].get('href')
                 print 'car_link',car_link
                 try:
@@ -76,7 +77,10 @@ class Caranddrive(BaseCraw):
         html = self.fromstring(page) 
         car_body = self.locate(html,'div.postWrapper')[0]
         car_body = self.tostring(car_body)
-        car_body = self.clean(car_body)
+        car_body = self.clean(car_body,flag='lazy')
+        # r=re.compile(r'<hr>.*?<hr>')
+        # car_body = r.sub(car_body,'')
+
         return car_body
 
     def run(self):

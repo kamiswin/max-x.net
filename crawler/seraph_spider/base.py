@@ -13,7 +13,8 @@ from spider.models import Car
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger(__name__)
 
-cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'])
+cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['data-lazy-src'])
+cleaner2 = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'])
 
 class BaseCraw(object):
 
@@ -64,10 +65,16 @@ class BaseCraw(object):
         page_content = lxml.html.tostring(html)
         return page_content
 
-    def clean(self,car_body):
+    def clean(self,car_body,flag=''):
         r = re.compile(r'<a>|</a>')
-        car_body = cleaner.clean_html(car_body)
-        car_body = r.sub('',car_body)
+        if flag == 'lazy':
+            car_body = cleaner.clean_html(car_body)
+            car_body = r.sub('',car_body)
+            car_body = car_body.replace('data-lazy-src','src')
+        else:
+            car_body = cleaner2.clean_html(car_body)
+            car_body = r.sub('',car_body)
+            
         return car_body
 
         
