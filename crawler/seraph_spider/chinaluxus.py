@@ -64,24 +64,28 @@ def spiderboy(cate):
     html = lxml.html.fromstring(page.content)
     for item in html.cssselect('.listDetail'):
         car_link=item.cssselect('.fb14d a')[0].get('href')
-        logger.info('link: ' + car_link)
+        # logger.info('link: ' + car_link)
+        print 'link '+car_link
         try:
             Car.objects.get(car_link=car_link)
-            logger.info('already have '+ car_link)
+            # logger.info('already have '+ car_link)
+            print 'already have '+ car_link
             pass
         except Exception, e:
 
             car_title=str(item.cssselect('.fb14d')[0].text_content())
-            logger.info('title: '+car_title)
+            # logger.info('title: '+car_title)
+            print 'title '+car_title
             # 中奢网的汽车快讯栏目么有图片
             try:
                 car_icon=item.cssselect('.img img')[0].get('src')
             except Exception, e:
-                logger.warn('have no : '+car_icon)
+                # logger.warn('have no : '+car_icon)
+                print 'have no '+car_icon
                 car_icon='/static/img/a1.jpg'
 
             car_des=str(item.cssselect('.spanText')[0].text_content())
-            logger.info('des: '+car_des)
+            # logger.info('des: '+car_des)
 
             innerpage = requests.get(car_link)
             innerhtml = lxml.html.fromstring(innerpage.content)
@@ -100,9 +104,9 @@ def spiderboy(cate):
 
 
             car_body =mid_body
-            logger.info('body: catch')
+            # logger.info('body: catch')
             car_cate = category_select(cate,catechoice)
-            logger.info('category: '+car_cate)
+            # logger.info('category: '+car_cate)
 
             r = re.compile(r'<a>|</a>')
             car_body = cleaner.clean_html(car_body)
@@ -119,13 +123,13 @@ def spiderboy(cate):
 
 
             ca.save()
-            logger.info('done one')
+            # logger.info('done one')
 
 
 
 
 def nextPage(html,base_url=''):
-    logger.info('have many page')
+    # logger.info('have many page')
     car_body = lxml.html.tostring(html.cssselect('.text')[-1])
     while len(html.cssselect('.next')) > 0 and len(html.cssselect('.nextBtn')) == 0:
         nextpage = requests.get(base_url + html.cssselect('.next')[0].get('href'))
@@ -136,7 +140,7 @@ def nextPage(html,base_url=''):
     return car_body
 
 def nextPhoto(html):
-    logger.info('have many photo')
+    # logger.info('have many photo')
     last_url=''
     up_photo = lxml.html.tostring(html.cssselect('.destinPic img')[0])
     up_body = lxml.html.tostring(html.cssselect('.explainPic')[0])

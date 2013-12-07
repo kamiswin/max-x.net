@@ -52,14 +52,14 @@ def spiderboy(url):
 
     for item in items:
         car_link = item.get('href')
-        logger.info('link: '+car_link)
+        # logger.info('link: '+car_link)
         try:
             Car.objects.get(car_link=car_link)
-            logger.info('already have ' + car_link)
+            # logger.info('already have ' + car_link)
             pass
         except:
             car_title = str(item.text_content())
-            logger.info('title: '+car_title)
+            # logger.info('title: '+car_title)
             car_icon = 'http://x.autoimg.cn/news/index/img/20110801/logo_new.png'
             car_des = ''
 
@@ -103,7 +103,7 @@ def spiderboy(url):
                      car_cate='car')
 
             ca.save()
-            logger.info('done one')
+            # logger.info('done one')
 
 if __name__ == '__main__':
     gevent.joinall(
