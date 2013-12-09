@@ -17,6 +17,7 @@ export PYTHONPATH=$NEW_COM:$PYTHONPATH
 
 
 cd $NEW_COM
+kill -9 `pgrep -f run.sh`
 python $SPIDER_PATH/autohome.py
 python $SPIDER_PATH/chinaluxus.py
 python $SPIDER_PATH/new527motor.py
