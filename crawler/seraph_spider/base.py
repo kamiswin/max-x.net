@@ -6,6 +6,7 @@ selfpath = os.path.split(os.path.realpath(__file__))[0]
 PATH = os.path.abspath(os.path.join(selfpath, '..'))
 sys.path.append(PATH)
 import requests
+import platform
 import re
 import lxml.html
 from lxml.html.clean import Cleaner
@@ -20,7 +21,11 @@ from selenium.webdriver.common.by import By
 
 
 ppath = os.path.split(os.path.realpath(__file__))[0]
-phantompath = ppath + '/phantomjslinux'
+oss = platform.platform()
+if 'Linux' in oss:
+    phantompath = ppath + '/phantomjslinux'
+else:
+    phantompath = ppath + '/phantomjsmac'
 
 cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['data-lazy-src'])
 cleaner2 = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'])
@@ -89,6 +94,7 @@ class BaseCraw(object):
 
     def init_dr(self):
         self._dr = webdriver.PhantomJS(executable_path=phantompath)
+        self._dr.set_page_load_timeout(60)
 
     def js_fetch(self,url):
 
@@ -97,7 +103,10 @@ class BaseCraw(object):
         try:
             self._dr.get(url)
         except:
-            self._dr.get(url)
+            try:
+                self._dr.get(url)
+            except:
+                pass 
 
 
 
