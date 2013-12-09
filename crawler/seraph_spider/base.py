@@ -88,7 +88,7 @@ class BaseCraw(object):
 
 
     def init_dr(self):
-        self._dr = webdriver.PhantomJS(phantompath)
+        self._dr = webdriver.PhantomJS(executable_path=phantompath)
 
     def js_fetch(self,url):
 
