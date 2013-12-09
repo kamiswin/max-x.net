@@ -1,8 +1,9 @@
 # Django settings for crawler project.
 import os
-#import sys
+import sys
 selfpath = os.path.split(os.path.realpath(__file__))[0]
 PATH = os.path.abspath(os.path.join(selfpath,'..'))
+
 #sys.path.append(PATH)
 DEBUG = False
 # TEMPLATE_DEBUG = DEBUG

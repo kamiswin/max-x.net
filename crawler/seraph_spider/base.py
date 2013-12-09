@@ -115,6 +115,10 @@ class BaseCraw(object):
         html = el[0].get_attribute('outerHTML')
         return html
 
+    def kill_dr(self):
+        self._dr.close()
+        self._dr.quit()
+
         
         
         

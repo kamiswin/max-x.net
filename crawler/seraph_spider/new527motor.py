@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-# encoding:utf-8
-import re
-from gevent import monkey
+#              encoding:utf-8
+import         re
+from           gevent import monkey
 monkey.patch_all()
 from base import BaseCraw
 import lxml.html
@@ -64,6 +64,7 @@ class Newmotor(BaseCraw):
 
                 innerpage = self.js_fetch(car_link)
                 innerhtml = self.findby('body')
+                self.kill_dr()
                 innerhtml = lxml.html.fromstring(innerhtml)
 
                 try:

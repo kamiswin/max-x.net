@@ -86,7 +86,7 @@ def spiderboy(url):
                 pass
 
 
-            article = innerhtml.cssselect('#articleContent')[0]
+            article =innerhtml.cssselect('#articleContent')[0]
             mid_body = lxml.html.tostring(article,encoding=unicode)
             mid_body2 = cut(mid_body)
             r = re.compile(r'<a>|</a>')
