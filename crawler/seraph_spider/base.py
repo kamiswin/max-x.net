@@ -19,8 +19,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-selfpath = os.path.split(os.path.realpath(__file__))[0]
-phantompath = selfpath + '/phantomJS'
+ppath = os.path.split(os.path.realpath(__file__))[0]
+phantompath = ppath + '/phantomJS'
 
 cleaner = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['data-lazy-src'])
 cleaner2 = Cleaner(style=True,scripts=True,page_structure=False,safe_attrs_only=True,safe_attrs=['src'])
