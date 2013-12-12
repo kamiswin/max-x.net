@@ -29,6 +29,7 @@ $(document).ready(function(){
         }
     });
 
+    bindPostCommentHandler();
     // active
     var cateactive = null,
         siteactive = null,
@@ -154,7 +155,7 @@ $(document).ready(function(){
     });
 
 
-    bindPostCommentHandler();
+   
 });
 
 // ajax
@@ -169,7 +170,7 @@ function bindPostCommentHandler() {
         var h0 = $(window).scrollTop(),
             h2 = $(window).height(),
             h3 = $(document).height(),
-            h4 = $('footer').height() + 400,
+            h4 = 400,
             url = window.location.href;
             base_url = [url.split('/')[0],url.split('/')[1],url.split('/')[2],'v1','list'].join('/') 
 
@@ -205,6 +206,7 @@ function bindPostCommentHandler() {
         }
     });
 }
+
 
 
 // django send
