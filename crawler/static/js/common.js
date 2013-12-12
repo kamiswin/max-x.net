@@ -169,7 +169,7 @@ function bindPostCommentHandler() {
         var h0 = $(window).scrollTop(),
             h2 = $(window).height(),
             h3 = $(document).height(),
-            h4 = $('div.span12 p.text-center a').height() + 400,
+            h4 = $('footer').height() + 400,
             url = window.location.href;
             base_url = [url.split('/')[0],url.split('/')[1],url.split('/')[2],'v1','list'].join('/') 
 
