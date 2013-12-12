@@ -171,6 +171,7 @@ function bindPostCommentHandler() {
             h2 = $(window).height(),
             h3 = $(document).height(),
             h4 = 400,
+
             url = window.location.href;
             base_url = [url.split('/')[0],url.split('/')[1],url.split('/')[2],'v1','list'].join('/') 
 
@@ -189,12 +190,13 @@ function bindPostCommentHandler() {
             category:category,
             site:site
         };
-        if(h0+h2>=h3-h4){
+        if((h0+h2)>=(h3-h4)){
             loadtime=0;
         }
 
-        if(h0+h2>=h3-h4&&loadtime==0){
+        if(((h0+h2)>=(h3-h4))&&(loadtime==0)){
             $.get(base_url,data,function(html){
+
                         $('div.col-sm-9 ul.main-list').eq(0).append(html)
                     }
 
