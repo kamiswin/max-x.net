@@ -61,7 +61,7 @@
                 </div>
                 <p style="display:none;"><label for="id_honeypot">如果你在该字段中输入任何内容，那么你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="id_honeypot"></p>
                 <div class="form-actions">
-                    <input class="btn btn-info" type="submit" name="submit" value="发表">
+                    <input class="btn btn-info" id="id_submit" type="submit" name="submit" value="发表">
                     {# <input class="btn btn-info" type="submit" name="preview" value="Preview"> #}
                     <input type='hidden' name='next' value='{% url "spider:showcomment" car.id %}'/>
                 </div>

@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate,login as auth_login,logout as auth_
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
+from django.utils import simplejson
 #from django.template import loader
 from forms import *
 from models import UserProfile
@@ -20,15 +21,23 @@ def register(request):
         if rf.is_valid():
             data = rf.clean()
         else:
-            return render('regist.html',locals(),context_instance=RequestContext(request))
+            # 数据不合法
+            return HttpResponse(simplejson.dumps({
+                        'status':'type worong',
+                        # 'content':'content'
+                        
+                    }, ensure_ascii=False),content_type="application/json")
 
         try:
             user = User.objects.get(username=data['username'])
         except User.DoesNotExist:
             pass
         else:
-            messages.error(request,'email已经注册过，请换一个')
-            return render('regist.html',locals(),context_instance=RequestContext(request))
+            # 用户名已经存在
+            return HttpResponse(simplejson.dumps({
+                        'status':'already exist',
+                        # 'username':'',
+                    }, ensure_ascii=False), content_type="application/json")
 
         new_user = User.objects.create_user(username=data['username'],email=data['username'],password=data['password'])
         new_user.save()
@@ -36,11 +45,18 @@ def register(request):
 
         new_profile.save()
 
-        return HttpResponseRedirect('/account/login/')
+        return HttpResponse(simplejson.dumps({
+                        'status':'success',
+                        # 'username':'',
+                    }, ensure_ascii=False), content_type="application/json")
 
     else:
         rf = RegisterForm()
-    return render('regist.html',locals(),context_instance=RequestContext(request))
+        # 不是post请求
+    return HttpResponse(simplejson.dumps({
+            'status':'not post',
+            # 'username':'',
+        }, ensure_ascii=False))
 
 
 @csrf_protect
@@ -53,20 +69,39 @@ def login(request):
             try:
                 user = User.objects.get(username=data['username'])
             except User.DoesNotExist:
-                messages.error(request,"这个email还没注册过，果断注册")
-                return render('login.html',locals(),context_instance=RequestContext(request))
+                # messages.error(request,"这个email还没注册过，果断注册")
+                # return render('login.html',locals(),context_instance=RequestContext(request))
+                return HttpResponse(simplejson.dumps({
+                        'status':'not exist',
+                        'username':'',
+                    }, ensure_ascii=False), content_type="application/json")
 
             user = authenticate(username=data['username'],password=data['password'])
             if user is not None:
                 auth_login(request,user)
-                return HttpResponseRedirect('/')
+                return_user = User.objects.get(username=data['username'])
+                # return HttpResponseRedirect('/')
+                # screen_name = return_user.screen_name
+                return HttpResponse(simplejson.dumps({
+                        'status':'already',
+                        'username':return_user.username,
+                    }, ensure_ascii=False),content_type="application/json")
             else:
                 messages.error(request,'密码错误')
 
-        return render('login.html',locals(),context_instance=RequestContext(request))
+        # return render('login.html',locals(),context_instance=RequestContext(request))
+        return HttpResponse(simplejson.dumps({
+                        'status':'type worong',
+                        'content':'content'
+                        
+                    }, ensure_ascii=False),content_type="application/json")
 
     lf = LoginForm()
-    return render('login.html',{'lf':lf},context_instance=RequestContext(request))
+    # return render('login.html',{'lf':lf},context_instance=RequestContext(request))
+    return HttpResponse(simplejson.dumps({
+            'status':'not post',
+            'username':'',
+        }, ensure_ascii=False))
 
 
 def logout(request):
