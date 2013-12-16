@@ -7,7 +7,7 @@ class Car(models.Model):
     car_title = models.CharField(max_length=300)
     car_icon = models.CharField(max_length=300)
     car_des = models.TextField()
-    car_link = models.CharField(max_length=300)
+    car_link = models.CharField(max_length=255,unique=True)
     car_body = models.TextField()
     car_time = models.DateTimeField(auto_now_add=True)
     car_source = models.CharField(max_length=20)

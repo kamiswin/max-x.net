@@ -6,7 +6,7 @@ monkey.patch_all()
 from base import BaseCraw
 import lxml.html
 from spider.models import Car
-
+from django.core.exceptions import ObjectDoesNotExist
 
 class Newmotor(BaseCraw):
 
@@ -56,7 +56,7 @@ class Newmotor(BaseCraw):
                 Car.objects.get(car_link=car_link)
                 print 'already have ',car_link
                 pass
-            except Exception,e:
+            except ObjectDoesNotExist as e:
                 print node.cssselect('.xs2 a')[0].text_content()
                 car_title = node.cssselect('.xs2 a')[0].text_content().encode('utf-8')
                 car_icon = self._url.rsplit('/',1)[0] + '/' + node.cssselect('.atc img')[0].get('src')
@@ -95,6 +95,8 @@ class Newmotor(BaseCraw):
 
                 ca.save()
                 print 'done'
+            except Exception as e:
+                pass
 
     def run(self):
         self.get_list_info()

@@ -20,6 +20,7 @@ from lxml.html.clean import Cleaner
 import logging
 import logging.config
 import re
+from django.core.exceptions import ObjectDoesNotExist
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('autohome')
 
@@ -58,7 +59,7 @@ def spiderboy(url):
             Car.objects.get(car_title=car_title)
             # logger.info('already have ' + car_link)
             pass
-        except:
+        except ObjectDoesNotExist as e:
             
             # logger.info('title: '+car_title)
             car_icon = 'http://x.autoimg.cn/news/index/img/20110801/logo_new.png'
@@ -104,6 +105,8 @@ def spiderboy(url):
                      car_cate='car')
 
             ca.save()
+        except Exception as e:
+            pass
             # logger.info('done one')
 
 if __name__ == '__main__':

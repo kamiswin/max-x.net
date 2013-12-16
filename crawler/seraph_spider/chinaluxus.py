@@ -18,6 +18,7 @@ from lxml.html.clean import Cleaner
 import logging
 import logging.config
 import re
+from django.core.exceptions import ObjectDoesNotExist
 
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('chinaluxus')
@@ -68,12 +69,13 @@ def spiderboy(cate):
         # logger.info('link: ' + car_link)
         print 'link '+car_link
         try:
-            Car.objects.get(car_title=car_title)
+            Car.objects.get(car_link=car_link)
             # logger.info('already have '+ car_link)
             print 'already have '+ car_link
+            print 1111111111111111111111111
             pass
-        except Exception, e:
-
+        except ObjectDoesNotExist as e:
+            print 2222222222222222222222222
             
             # logger.info('title: '+car_title)
             print 'title '+car_title
@@ -124,6 +126,8 @@ def spiderboy(cate):
 
 
             ca.save()
+        except Exception as e:
+            pass
             # logger.info('done one')
 
 

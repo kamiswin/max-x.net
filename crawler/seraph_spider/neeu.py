@@ -18,6 +18,7 @@ from lxml.html.clean import Cleaner
 import logging
 import logging.config
 import re
+from django.core.exceptions import ObjectDoesNotExist
 logging.config.fileConfig('crawler/seraph_spider/logging.conf')
 logger = logging.getLogger('neeu')
 
@@ -154,7 +155,7 @@ def category_select(item,dic):
 
 def nextPage(html,base_url=''):
     #print 111
-    logger.info('have many page')
+    # logger.info('have many page')
     car_body = lxml.html.tostring(html.cssselect('.content')[0])
     car_body = cleaner.clean_html(car_body)
     while html.cssselect('.cpagesizebottom a')[-1].text_content() == u'下一页':
@@ -191,7 +192,7 @@ def spiderboy(url):
         try:
             Car.objects.get(car_title=car_title)
             pass
-        except Exception,e:
+        except ObjectDoesNotExist as e:
             
             # logger.info('title: '+car_title)
             car_icon = base_url + item.cssselect('.newspic a img')[0].get('src')
@@ -237,7 +238,9 @@ def spiderboy(url):
 
 
             ca.save()
-            logger.info('done one')
+            # logger.info('done one')
+        except Exception as e:
+            pass
 
 
 
