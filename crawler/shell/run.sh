@@ -25,3 +25,4 @@ python $SPIDER_PATH/autohome.py
 python $SPIDER_PATH/chinaluxus.py
 python $SPIDER_PATH/new527motor.py
 python $SPIDER_PATH/neeu.py
+python $SPIDER_PATH/autohome_fix.py
