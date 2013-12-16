@@ -52,16 +52,17 @@ def spiderboy(url):
 
     for item in items:
         car_link = item.get('href')
+        car_title = str(item.text_content())
         # logger.info('link: '+car_link)
         try:
-            Car.objects.get(car_link=car_link)
+            Car.objects.get(car_title=car_title)
             # logger.info('already have ' + car_link)
             pass
         except:
-            car_title = str(item.text_content())
+            
             # logger.info('title: '+car_title)
             car_icon = 'http://x.autoimg.cn/news/index/img/20110801/logo_new.png'
-            car_des = ''
+            car_des = ' '
 
             innerpage = requests.get(car_link)
             innerhtml = lxml.html.fromstring(innerpage.content.decode('gbk'))

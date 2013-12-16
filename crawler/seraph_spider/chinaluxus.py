@@ -64,16 +64,17 @@ def spiderboy(cate):
     html = lxml.html.fromstring(page.content)
     for item in html.cssselect('.listDetail'):
         car_link=item.cssselect('.fb14d a')[0].get('href')
+        car_title=str(item.cssselect('.fb14d')[0].text_content())
         # logger.info('link: ' + car_link)
         print 'link '+car_link
         try:
-            Car.objects.get(car_link=car_link)
+            Car.objects.get(car_title=car_title)
             # logger.info('already have '+ car_link)
             print 'already have '+ car_link
             pass
         except Exception, e:
 
-            car_title=str(item.cssselect('.fb14d')[0].text_content())
+            
             # logger.info('title: '+car_title)
             print 'title '+car_title
             # 中奢网的汽车快讯栏目么有图片

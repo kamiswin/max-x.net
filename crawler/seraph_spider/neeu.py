@@ -185,17 +185,19 @@ def spiderboy(url):
     items = html.cssselect('.anewsnotitle')
     for item in items:
         car_link = base_url + item.cssselect('.newstext h3 a')[0].get('href')
-        logger.info('link: '+car_link)
+        # logger.info('link: '+car_link)
+        print car_link
+        car_title = str(item.cssselect('.newstext h3 a')[0].text_content())
         try:
-            Car.objects.get(car_link = car_link)
+            Car.objects.get(car_title=car_title)
             pass
         except Exception,e:
-            car_title = str(item.cssselect('.newstext h3 a')[0].text_content())
-            logger.info('title: '+car_title)
+            
+            # logger.info('title: '+car_title)
             car_icon = base_url + item.cssselect('.newspic a img')[0].get('src')
-            logger.info('icon_url: '+car_icon)
+            # logger.info('icon_url: '+car_icon)
             car_des = str(item.cssselect('.newstext p')[0].text_content())
-            logger.info('get des')
+            # logger.info('get des')
 
             innerpage = requests.get(car_link,headers=headers)
             innerhtml = lxml.html.fromstring(innerpage.content.decode('gbk','ignore'))
@@ -221,9 +223,9 @@ def spiderboy(url):
                 mid_body = mid_body.replace(i,base_url+i)
 
             car_body = mid_body
-            logger.info('body: catch')
+            # logger.info('body: catch')
             car_cate = category_select(url,catechoice)
-            logger.info('category: '+car_cate)
+            # logger.info('category: '+car_cate)
 
             ca = Car(car_title=car_title,
                      car_des=car_des,

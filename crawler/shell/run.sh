@@ -20,6 +20,8 @@ cd $NEW_COM
 kill -9 `pgrep -f autohome.py`
 kill -9 `pgrep -f chinaluxus.py`
 kill -9 `pgrep -f new527motor.py`
+kill -9 `pgrep -f neeu.py`
 python $SPIDER_PATH/autohome.py
 python $SPIDER_PATH/chinaluxus.py
 python $SPIDER_PATH/new527motor.py
+python $SPIDER_PATH/neeu.py
