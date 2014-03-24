@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'account',
     'django.contrib.comments',
     'pagination',
+    'gunicorn',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
